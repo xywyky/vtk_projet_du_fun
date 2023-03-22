@@ -6,7 +6,7 @@
 #define SMALL
 
 
-int NbPasses = 50;
+int NbPasses = 45;//45
 //grenouille
 /*
 #define FICHIER MY_MESHES_PATH "/Frog_CHAR_X_256_Y_256_Z_44.raw"
@@ -18,12 +18,12 @@ int ZgridSize = 44;
 #define CHAR
 
 
-int startexploreval=1;//60
+int startexploreval=60;//60
 int endexploreval=255;//255
 //*/
 
-//je sais pas
-
+//en tranche ça ressemble à un arbre
+/*
 #define FICHIER MY_MESHES_PATH "/Mystere5_SHORT_X_2048_Y_2048_Z_756.raw"
  
  int gridSize = 2048;
@@ -102,15 +102,15 @@ int endexploreval=65000; //26500//*/
 
 
 //il plante a faire fonctionner
-/*
+
 #define FICHIER MY_MESHES_PATH "/Mystere8_CHAR_X_2048_Y_2048_Z_2048.raw"
-int gridSize = 1024;
-int YgridSize = 1024;
-int ZgridSize = 1024;
+int gridSize = 2048;
+int YgridSize = 2048;
+int ZgridSize = 2048;
 
 #define CHAR
 
-int startexploreval=1;
+int startexploreval=200;
 int endexploreval=255;//*/
 
 //oh un omar
@@ -168,7 +168,6 @@ int main(int argc, char *argv[])
 {
 
     //for(startexploreval=1; startexploreval < endexploreval; startexploreval+=10000){
-        printf("eufgzjehfze%d",startexploreval);
         srand(time(NULL));
 //    int zStart = 0;
 //    int zEnd = ZgridSize;
@@ -241,7 +240,7 @@ int main(int argc, char *argv[])
         ren->AddActor(actor);
         ren->SetViewport(0, 0, 1, 1);
         // ren->GetActiveCamera()->Azimuth(90) ;
-        ren->GetActiveCamera()->Elevation(0);
+        ren->GetActiveCamera()->Elevation(45);
         //vtkCamera *cam = ren->GetActiveCamera();
         //         cam->SetFocalPoint(0.5, 0.5, 0.5);
         //                        cam->SetPosition(-2., .0, 3.);
@@ -265,7 +264,7 @@ int main(int argc, char *argv[])
             auxrgba[i * 4 + 3] = 1;
         }
 
-        for (passNum = 0; passNum < 10; passNum++) {
+        for (passNum = 0; passNum < 30; passNum++) {
 
             int step = (gridSize / NbPasses);
 
@@ -286,7 +285,7 @@ int main(int argc, char *argv[])
             cf->Update();
             cf->GetOutput()->GetPointData()->SetActiveScalars("pass_num");
 
-            //renwin->Render();
+            renwin->Render();
 
 
             float *rgba = renwin->GetRGBAPixelData(0, 0, winSize - 1, winSize - 1, 1);
@@ -310,10 +309,11 @@ int main(int argc, char *argv[])
             float *new_rgba = new float[4 * winSize * winSize];
             bool didComposite = ComposeImageZbuffer(new_rgba, zbuffer, winSize, winSize);
 
+
+
             char namez[128];
             sprintf(namez, "imageZ%d-%d.png", passNum, startexploreval);
             WriteImage(namez, new_rgba, winSize, winSize);
-
 
             free(rgba);
             free(zbuffer);
