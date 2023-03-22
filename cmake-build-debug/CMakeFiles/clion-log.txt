@@ -1,0 +1,18 @@
+/usr/local/produits/clion-2022.1.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/local/produits/clion-2022.1.3/bin/ninja/linux/ninja -G Ninja -S /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir -B /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir/cmake-build-debug
+CMake Deprecation Warning at /usr/lib/x86_64-linux-gnu/cmake/vtk-9.1/vtk-use-file-deprecated.cmake:1 (message):
+  The `VTK_USE_FILE` is no longer used starting with 8.90.
+Call Stack (most recent call first):
+  CMakeLists.txt:33 (include)
+
+
+CMake Warning at CMakeLists.txt:38 (MESSAGE):
+  System detected:Linux
+
+
+CMake Warning at CMakeLists.txt:39 (MESSAGE):
+  Path to data:/tp/mystere
+
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir/cmake-build-debug
