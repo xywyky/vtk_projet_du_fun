@@ -48,7 +48,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "vtktp::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-vtktp-Debug-3dfdb7efd879ad3285eb.json",
+					"jsonFile" : "target-vtktp-Debug-619a599704fb226cc60d.json",
 					"name" : "vtktp",
 					"projectIndex" : 0
 				}
@@ -58,8 +58,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir/cmake-build-debug",
-		"source" : "/home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir"
+		"build" : "/home/o2172088@campus.univ-orleans.fr/CLionProjects/vtk_projet_du_fun/cmake-build-debug",
+		"source" : "/home/o2172088@campus.univ-orleans.fr/CLionProjects/vtk_projet_du_fun"
 	},
 	"version" : 
 	{

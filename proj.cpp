@@ -4,8 +4,11 @@
 #include "helpers.h"
 //#define BIG
 #define SMALL
-//grenouille
 
+
+int NbPasses = 50;
+//grenouille
+/*
 #define FICHIER MY_MESHES_PATH "/Frog_CHAR_X_256_Y_256_Z_44.raw"
 
 int gridSize = 256;
@@ -15,12 +18,12 @@ int ZgridSize = 44;
 #define CHAR
 
 
-int startexploreval=13;//60
-int endexploreval=20;//255
+int startexploreval=1;//60
+int endexploreval=255;//255
 //*/
 
 //je sais pas
-/*
+
 #define FICHIER MY_MESHES_PATH "/Mystere5_SHORT_X_2048_Y_2048_Z_756.raw"
  
  int gridSize = 2048;
@@ -29,7 +32,7 @@ int endexploreval=20;//255
 
  #define SHORT
 
-int startexploreval=100;
+int startexploreval=15000;
 int endexploreval=65000;//*/
 
 // On suppose voiture mettre le parallel readgrid
@@ -47,6 +50,7 @@ int startexploreval=35;//10
 int endexploreval=255;//*/
 
 //cochon tirelire
+//entre 20000 30000
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere1_SHORT_X_512_Y_512_Z_134.raw"
 int gridSize = 512;
@@ -83,7 +87,8 @@ int startexploreval=28000;//20000
 int endexploreval=65000; //26500//*/
 
 
-// arbre ou cacahuette
+// arbre
+//20000 - 30000
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere2_SHORT_X_512_Y_400_Z_512.raw"
 int gridSize = 512;
@@ -99,9 +104,9 @@ int endexploreval=65000; //26500//*/
 //il plante a faire fonctionner
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere8_CHAR_X_2048_Y_2048_Z_2048.raw"
-int gridSize = 2048;
-int YgridSize = 2048;
-int ZgridSize = 2048;
+int gridSize = 1024;
+int YgridSize = 1024;
+int ZgridSize = 1024;
 
 #define CHAR
 
@@ -109,6 +114,7 @@ int startexploreval=1;
 int endexploreval=255;//*/
 
 //oh un omar
+//41
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere10_CHAR_X_1204_Y_1296_Z_224.raw"
 int gridSize = 1204;
@@ -117,10 +123,11 @@ int ZgridSize = 224;
 
 #define CHAR
 
-int startexploreval=50;
+int startexploreval=1;//50
 int endexploreval=255;//*/
 //Oh un magnifique poisson
 
+//10000 - 30000
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere11_SHORT_X_512_Y_512_Z_1024.raw"
 int gridSize = 512;
@@ -130,7 +137,7 @@ int ZgridSize = 1024;
 #define SHORT
 
 int startexploreval=10000;//20000
-int endexploreval=15000; //26500//*/
+int endexploreval=65000; //26500//*/
 
 const char *location = FICHIER ;
 
@@ -159,117 +166,182 @@ bool ComposeImageZbuffer(float *rgba_out, float *zbuffer,   int image_width, int
 
 int main(int argc, char *argv[])
 {
-    srand ( time(NULL) );
+
+    //for(startexploreval=1; startexploreval < endexploreval; startexploreval+=10000){
+        printf("eufgzjehfze%d",startexploreval);
+        srand(time(NULL));
 //    int zStart = 0;
 //    int zEnd = ZgridSize;
 
-    int npixels=winSize*winSize;
-   vtkRectilinearGrid *reader = NULL;
-   
-    
-    vtkLookupTable *lut = vtkLookupTable::New();
-   
-        lut->SetHueRange(       0.1, 0.0);
+        int npixels = winSize * winSize;
+        vtkRectilinearGrid *reader = NULL;
+
+
+        vtkLookupTable *lut = vtkLookupTable::New();
+
+        lut->SetHueRange(0.1, 0.0);
         lut->SetSaturationRange(0.0, 1.0);
-        lut->SetValueRange(     1.0, 255.0);
+        lut->SetValueRange(1.0, 255.0);
         lut->SetNumberOfColors(100);
-    lut->Build();
+        lut->Build();
 
 
         vtkRenderer *ren = vtkRenderer::New();
-        double bounds[6]={0.00001,1-0.00001,0.00001,1-0.00001,0.00001,1-0.00001};
+        double bounds[6] = {0.00001, 1 - 0.00001, 0.00001, 1 - 0.00001, 0.00001, 1 - 0.00001};
 
-        ren->ResetCamera	(bounds)	;
+        ren->ResetCamera(bounds);
 
-         bool once=true;
+        bool once = true;
         vtkRenderWindow *renwin = vtkRenderWindow::New();
         renwin->SetSize(winSize, winSize);
-        
         renwin->AddRenderer(ren);
 
-            int zStart = 0;
+        int zStart = 0;
 
 
-            int zEnd = ZgridSize;
-         
-            
+        int zEnd = ZgridSize;
+
+
         reader = ReadGrid(zStart, zEnd);
-    
-    vtkContourFilter *cf = vtkContourFilter::New();
-    cf->SetNumberOfContours(1);
-   // cf->SetValue(0, 20.0);
-    int valcont=startexploreval;
-   cf->SetValue(0,valcont);
-        
-      cf->SetInputData(reader);
-            
-            int maxsize=std::max(gridSize,std::max(YgridSize,ZgridSize));
-            vtkSmartPointer<vtkTransform> transform =vtkSmartPointer<vtkTransform>::New();
-                    transform->Scale(gridSize/(float)maxsize,YgridSize/(float)maxsize,ZgridSize/(float)maxsize);
-                    vtkSmartPointer<vtkTransformFilter> transformFilter = vtkSmartPointer<vtkTransformFilter>::New();
-                    transformFilter->SetInputConnection(cf->GetOutputPort());
-                    transformFilter->SetTransform(transform);
-                   
-            
-            
-           
-    vtkDataSetMapper *mapper = vtkDataSetMapper::New();
-  //     mapper->SetInputData( reader );
-            mapper->SetInputConnection(transformFilter->GetOutputPort());
-    
-    
+
+        vtkContourFilter *cf = vtkContourFilter::New();
+        cf->SetNumberOfContours(1);
+        // cf->SetValue(0, 20.0);
+        int valcont = startexploreval;
+        cf->SetValue(0, valcont);
+
+        cf->SetInputData(reader);
+
+        int maxsize = std::max(gridSize, std::max(YgridSize, ZgridSize));
+        vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+        transform->Scale(gridSize / (float) maxsize, YgridSize / (float) maxsize, ZgridSize / (float) maxsize);
+        vtkSmartPointer<vtkTransformFilter> transformFilter = vtkSmartPointer<vtkTransformFilter>::New();
+        transformFilter->SetInputConnection(cf->GetOutputPort());
+        transformFilter->SetTransform(transform);
+
+
+        vtkDataSetMapper *mapper = vtkDataSetMapper::New();
+        //     mapper->SetInputData( reader );
+        mapper->SetInputConnection(transformFilter->GetOutputPort());
+
+
         vtkActor *actor = vtkActor::New();
-    actor->SetMapper(mapper);
-    
-      float startval=valcont;
-    float endval=endexploreval;
-   
-    
-    mapper->SetScalarRange(startexploreval,endexploreval);
-  
-    
-    mapper->SetLookupTable(lut);
+        actor->SetMapper(mapper);
 
-    
-      ren->AddActor(actor);
-     ren->SetViewport(0, 0, 1, 1);
-    
-    
-   // vtkCamera *cam = ren->GetActiveCamera();
-            //cam->SetFocalPoint(0.5, 0.5, 0.5);
-                           //cam->SetPosition(-0., .0, 3.);
-                            //cam->SetViewUp(0., -1.0, 0.0);
+        float startval = valcont;
+        float endval = endexploreval;
 
 
-         //*
-           vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
-            iren->SetRenderWindow(renwin);
-            renwin->Render();
-
-    float *rgba = renwin->GetRGBAPixelData(0, 0, winSize-1, winSize-1, 1);
-
-    char name[256];
-    sprintf(name, "image%d.png", passNum);
-    WriteImage(name, rgba, winSize,  winSize);
-
-            iren->Start();
-         //*/
+        mapper->SetScalarRange(startval, endval);
 
 
+        mapper->SetLookupTable(lut);
 
-           reader->Delete();
-            mapper->Delete();
-             cf->Delete();
-  //          lut->Delete();
-            ren->RemoveActor(actor);
-            actor->Delete();
-      
+
+        ren->AddActor(actor);
+        ren->SetViewport(0, 0, 1, 1);
+        // ren->GetActiveCamera()->Azimuth(90) ;
+        ren->GetActiveCamera()->Elevation(0);
+        //vtkCamera *cam = ren->GetActiveCamera();
+        //         cam->SetFocalPoint(0.5, 0.5, 0.5);
+        //                        cam->SetPosition(-2., .0, 3.);
+        //                         cam->SetViewUp(0., -1.0, 0.0);
+
+
+        //*
+        vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
+        iren->SetRenderWindow(renwin);
+        renwin->Render();
+
+
+        float *auxrgba = new float[4 * winSize * winSize];
+        float *auxzbuffer = new float[4 * winSize * winSize];
+
+        for (int i = 0; i < winSize * winSize; i++) {
+            auxzbuffer[i] = 1.0;
+            auxrgba[i * 4] = 0;
+            auxrgba[i * 4 + 1] = 0;
+            auxrgba[i * 4 + 2] = 0;
+            auxrgba[i * 4 + 3] = 1;
+        }
+
+        for (passNum = 0; passNum < 10; passNum++) {
+
+            int step = (gridSize / NbPasses);
+
+            int zStart = passNum * (step);
+
+            //    (gridSize/2.2)-1
+            int zEnd = zStart + step;
+            if (passNum == NbPasses - 1) {
+                zEnd += -1;
+            }
+
+            vtkRectilinearGrid *rg = ReadGrid(zStart, zEnd);
+
+            cf->SetInputData(rg);
+            rg->Delete();
+
+            // Force an update and set the parallel rank as the active scalars.
+            cf->Update();
+            cf->GetOutput()->GetPointData()->SetActiveScalars("pass_num");
+
+            //renwin->Render();
+
+
+            float *rgba = renwin->GetRGBAPixelData(0, 0, winSize - 1, winSize - 1, 1);
+            float *zbuffer = renwin->GetZbufferData(0, 0, winSize - 1, winSize - 1);
+
+            for (int i = 0; i < winSize * winSize; i++) {
+                if (auxzbuffer[i] > zbuffer[i]) {
+
+                    auxzbuffer[i] = zbuffer[i];
+                    auxrgba[i * 4] = rgba[i * 4];
+                    auxrgba[i * 4 + 1] = rgba[i * 4 + 1];
+                    auxrgba[i * 4 + 2] = rgba[i * 4 + 2];
+                    auxrgba[i * 4 + 3] = rgba[i * 4 + 3];
+                }
+
+            }
+            char name[256];
+            sprintf(name, "image%d-%d.png", passNum, startexploreval);
+            WriteImage(name, rgba, winSize, winSize);
+
+            float *new_rgba = new float[4 * winSize * winSize];
+            bool didComposite = ComposeImageZbuffer(new_rgba, zbuffer, winSize, winSize);
+
+            char namez[128];
+            sprintf(namez, "imageZ%d-%d.png", passNum, startexploreval);
+            WriteImage(namez, new_rgba, winSize, winSize);
+
+
+            free(rgba);
+            free(zbuffer);
+            free(new_rgba);
+        }
+        char name2[128];
+        sprintf(name2, "final_image%d.png", startexploreval);
+
+        WriteImage(name2, auxrgba, winSize, winSize);
+
+        iren->Start();
+        //*/
+
+
+
+
+        reader->Delete();
+        mapper->Delete();
+        cf->Delete();
+        //          lut->Delete();
+        ren->RemoveActor(actor);
+        actor->Delete();
+
         ren->Delete();
         renwin->Delete();
-        
-        
-   
-   
+
+    //}
+
 }
 
 

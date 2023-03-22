@@ -1,4 +1,4 @@
-/usr/local/produits/clion-2022.1.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/local/produits/clion-2022.1.3/bin/ninja/linux/ninja -G Ninja -S /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir -B /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir/cmake-build-debug
+/usr/local/produits/clion-2022.1.3/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/o2172088@campus.univ-orleans.fr/CLionProjects/vtk_projet_du_fun -B /home/o2172088@campus.univ-orleans.fr/CLionProjects/vtk_projet_du_fun/cmake-build-debug
 CMake Deprecation Warning at /usr/lib/x86_64-linux-gnu/cmake/vtk-9.1/vtk-use-file-deprecated.cmake:1 (message):
   The `VTK_USE_FILE` is no longer used starting with 8.90.
 Call Stack (most recent call first):
@@ -15,4 +15,4 @@ CMake Warning at CMakeLists.txt:39 (MESSAGE):
 
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/o2172088@campus.univ-orleans.fr/Documents/big_data/canevas_devoir/cmake-build-debug
+-- Build files have been written to: /home/o2172088@campus.univ-orleans.fr/CLionProjects/vtk_projet_du_fun/cmake-build-debug
