@@ -2,12 +2,13 @@
 #include "config.h"
 #include <mpi.h>
 #include "helpers.h"
-//#define BIG
-#define SMALL
+#define BIG
+//#define SMALL
 
 
 int NbPasses = 45;//45
 //grenouille
+//Nombre de tranche 8
 /*
 #define FICHIER MY_MESHES_PATH "/Frog_CHAR_X_256_Y_256_Z_44.raw"
 
@@ -23,7 +24,7 @@ int endexploreval=255;//255
 //*/
 
 //en tranche ça ressemble à un arbre
-/*
+
 #define FICHIER MY_MESHES_PATH "/Mystere5_SHORT_X_2048_Y_2048_Z_756.raw"
  
  int gridSize = 2048;
@@ -51,6 +52,8 @@ int endexploreval=255;//*/
 
 //cochon tirelire
 //entre 20000 30000
+//Nombre de tranche 12
+// Elevation 180
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere1_SHORT_X_512_Y_512_Z_134.raw"
 int gridSize = 512;
@@ -63,6 +66,8 @@ int ZgridSize = 134;
  int endexploreval=65000; //26500//*/
  
 //cylindre / dents
+//Elevation 270
+//Nb de boucle 35
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere4_SHORT_X_512_Y_512_Z_322.raw"
 int gridSize = 512;
@@ -74,7 +79,8 @@ int ZgridSize = 322;
  int startexploreval=60000;// 1 = cylindre / 10000 = aparition de la dent / 20000 = dent avec cylindre clair / 30000 = pas visible /  40000 = pas visible / 50000 = disparition cylindre / 60000 = disparition cylindre et dents
  int endexploreval=65000;// 65000 //*/
 
-//trop gros ce lance pas
+//je sais pas ce que c'est mais on a les images
+//Nombre de tranche 11 apres ça ce refait
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere9_SHORT_X_2048_Y_2048_Z_1444.raw"
 int gridSize = 2048;
@@ -83,12 +89,14 @@ int ZgridSize = 1444;
 
 #define SHORT
 
-int startexploreval=28000;//20000
+int startexploreval=40000;//20000
 int endexploreval=65000; //26500//*/
 
 
 // arbre
-//20000 - 30000
+//20000
+//Nombre elevation 270
+//nb de boucle 50
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere2_SHORT_X_512_Y_400_Z_512.raw"
 int gridSize = 512;
@@ -97,12 +105,13 @@ int ZgridSize = 512;
 
 #define SHORT
 
-int startexploreval=64900;//20000
-int endexploreval=65000; //26500//*/
+int startexploreval=20000;
+int endexploreval=65000; //*/
 
 
-//il plante a faire fonctionner
-
+//tête
+//Nombre de tranche 23
+/*
 #define FICHIER MY_MESHES_PATH "/Mystere8_CHAR_X_2048_Y_2048_Z_2048.raw"
 int gridSize = 2048;
 int YgridSize = 2048;
@@ -110,7 +119,7 @@ int ZgridSize = 2048;
 
 #define CHAR
 
-int startexploreval=200;
+int startexploreval=150;
 int endexploreval=255;//*/
 
 //oh un omar
@@ -125,8 +134,8 @@ int ZgridSize = 224;
 
 int startexploreval=1;//50
 int endexploreval=255;//*/
-//Oh un magnifique poisson
 
+//Oh un magnifique poisson
 //10000 - 30000
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere11_SHORT_X_512_Y_512_Z_1024.raw"
@@ -167,7 +176,7 @@ bool ComposeImageZbuffer(float *rgba_out, float *zbuffer,   int image_width, int
 int main(int argc, char *argv[])
 {
 
-    //for(startexploreval=1; startexploreval < endexploreval; startexploreval+=10000){
+    //for(startexploreval=1; startexploreval < endexploreval; startexploreval+=15){
         srand(time(NULL));
 //    int zStart = 0;
 //    int zEnd = ZgridSize;
@@ -239,8 +248,8 @@ int main(int argc, char *argv[])
 
         ren->AddActor(actor);
         ren->SetViewport(0, 0, 1, 1);
-        // ren->GetActiveCamera()->Azimuth(90) ;
-        ren->GetActiveCamera()->Elevation(45);
+    ren->GetActiveCamera()->Elevation(270);
+        ren->GetActiveCamera()->Azimuth(0) ;
         //vtkCamera *cam = ren->GetActiveCamera();
         //         cam->SetFocalPoint(0.5, 0.5, 0.5);
         //                        cam->SetPosition(-2., .0, 3.);
@@ -248,9 +257,6 @@ int main(int argc, char *argv[])
 
 
         //*
-        vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
-        iren->SetRenderWindow(renwin);
-        renwin->Render();
 
 
         float *auxrgba = new float[4 * winSize * winSize];
@@ -264,11 +270,13 @@ int main(int argc, char *argv[])
             auxrgba[i * 4 + 3] = 1;
         }
 
-        for (passNum = 0; passNum < 30; passNum++) {
+        for (passNum = 0; passNum < 35; passNum++) {//11
 
             int step = (gridSize / NbPasses);
 
             int zStart = passNum * (step);
+
+            cf ->SetInputData(reader);
 
             //    (gridSize/2.2)-1
             int zEnd = zStart + step;
@@ -302,7 +310,7 @@ int main(int argc, char *argv[])
                 }
 
             }
-            char name[256];
+            char name[128];
             sprintf(name, "image%d-%d.png", passNum, startexploreval);
             WriteImage(name, rgba, winSize, winSize);
 
@@ -319,16 +327,20 @@ int main(int argc, char *argv[])
             free(zbuffer);
             free(new_rgba);
         }
+
         char name2[128];
         sprintf(name2, "final_image%d.png", startexploreval);
 
         WriteImage(name2, auxrgba, winSize, winSize);
 
+
+    vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
+    iren->SetRenderWindow(renwin);
         iren->Start();
         //*/
 
 
-
+        renwin->Render();
 
         reader->Delete();
         mapper->Delete();
