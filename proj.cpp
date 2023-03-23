@@ -23,8 +23,14 @@ int startexploreval=60;//60
 int endexploreval=255;//255
 //*/
 
-//en tranche ça ressemble à un arbre
+//Un arbre
+//nombre de tranche 16
+/*
+     GetActiveCamera()->Elevation(0)
+     GetActiveCamera()->Azimuth(0)
+     GetActiveCamera()->Roll(180)*/
 
+/*
 #define FICHIER MY_MESHES_PATH "/Mystere5_SHORT_X_2048_Y_2048_Z_756.raw"
  
  int gridSize = 2048;
@@ -33,12 +39,12 @@ int endexploreval=255;//255
 
  #define SHORT
 
-int startexploreval=15000;
+int startexploreval=30000;
 int endexploreval=65000;//*/
 
 // On suppose voiture mettre le parallel readgrid
 //porsche 911 type 996 turbo phase 2 en jouet
-/*
+
 #define FICHIER MY_MESHES_PATH "/Mystere6_CHAR_X_1118_Y_2046_Z_694.raw"
 
 int gridSize = 1118;
@@ -47,7 +53,7 @@ int ZgridSize = 694;
 
 #define CHAR
 
-int startexploreval=35;//10
+int startexploreval=20;//35
 int endexploreval=255;//*/
 
 //cochon tirelire
@@ -248,8 +254,9 @@ int main(int argc, char *argv[])
 
         ren->AddActor(actor);
         ren->SetViewport(0, 0, 1, 1);
-    ren->GetActiveCamera()->Elevation(270);
+    ren->GetActiveCamera()->Elevation(-90);
         ren->GetActiveCamera()->Azimuth(0) ;
+        ren->GetActiveCamera()->Roll(90);
         //vtkCamera *cam = ren->GetActiveCamera();
         //         cam->SetFocalPoint(0.5, 0.5, 0.5);
         //                        cam->SetPosition(-2., .0, 3.);
@@ -270,7 +277,7 @@ int main(int argc, char *argv[])
             auxrgba[i * 4 + 3] = 1;
         }
 
-        for (passNum = 0; passNum < 35; passNum++) {//11
+        for (passNum = 0; passNum < 22; passNum++) {//11
 
             int step = (gridSize / NbPasses);
 
