@@ -2,13 +2,13 @@
 #include "config.h"
 #include <mpi.h>
 #include "helpers.h"
-#define BIG
-//#define SMALL
+//#define BIG
+#define SMALL
 
 
 int NbPasses = 45;//45
 //grenouille
-//Nombre de tranche 8
+//Nombre de boucle a faire 8
 /*
 #define FICHIER MY_MESHES_PATH "/Frog_CHAR_X_256_Y_256_Z_44.raw"
 
@@ -24,7 +24,7 @@ int endexploreval=255;//255
 //*/
 
 //Un arbre
-//nombre de tranche 16
+//Nombre de boucle a faire 16
 /*
      GetActiveCamera()->Elevation(0)
      GetActiveCamera()->Azimuth(0)
@@ -44,7 +44,11 @@ int endexploreval=65000;//*/
 
 // On suppose voiture mettre le parallel readgrid
 //porsche 911 type 996 turbo phase 2 en jouet
-
+//Nombre de boucle a faire 22
+//ren->GetActiveCamera()->Roll(90);
+//ren->GetActiveCamera()->Elevation(90);
+//ren->GetActiveCamera()->Azimuth(0) ;
+/*
 #define FICHIER MY_MESHES_PATH "/Mystere6_CHAR_X_1118_Y_2046_Z_694.raw"
 
 int gridSize = 1118;
@@ -58,7 +62,7 @@ int endexploreval=255;//*/
 
 //cochon tirelire
 //entre 20000 30000
-//Nombre de tranche 12
+//Nombre de boucle a faire 12
 // Elevation 180
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere1_SHORT_X_512_Y_512_Z_134.raw"
@@ -73,7 +77,7 @@ int ZgridSize = 134;
  
 //cylindre / dents
 //Elevation 270
-//Nb de boucle 35
+//Nombre de boucle a faire 35
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere4_SHORT_X_512_Y_512_Z_322.raw"
 int gridSize = 512;
@@ -86,7 +90,10 @@ int ZgridSize = 322;
  int endexploreval=65000;// 65000 //*/
 
 //je sais pas ce que c'est mais on a les images
-//Nombre de tranche 11 apres ça ce refait
+//Nombre de boucle a faire 11
+//ren->GetActiveCamera()->Roll(0);
+//ren->GetActiveCamera()->Elevation(0);
+//ren->GetActiveCamera()->Azimuth(-135) ;
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere9_SHORT_X_2048_Y_2048_Z_1444.raw"
 int gridSize = 2048;
@@ -102,7 +109,7 @@ int endexploreval=65000; //26500//*/
 // arbre
 //20000
 //Nombre elevation 270
-//nb de boucle 50
+//Nombre de boucle a faire 50
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere2_SHORT_X_512_Y_400_Z_512.raw"
 int gridSize = 512;
@@ -116,7 +123,10 @@ int endexploreval=65000; //*/
 
 
 //tête
-//Nombre de tranche 23
+//Nombre de boucle a faire 23
+//ren->GetActiveCamera()->Roll(0);
+//ren->GetActiveCamera()->Elevation(0);
+//ren->GetActiveCamera()->Azimuth(0) ;
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere8_CHAR_X_2048_Y_2048_Z_2048.raw"
 int gridSize = 2048;
@@ -129,7 +139,10 @@ int startexploreval=150;
 int endexploreval=255;//*/
 
 //oh un omar
-//41
+//Nombre de boucle a faire 41
+//ren->GetActiveCamera()->Roll(0);
+//ren->GetActiveCamera()->Elevation(0);
+//ren->GetActiveCamera()->Azimuth(0) ;
 /*
 #define FICHIER MY_MESHES_PATH "/Mystere10_CHAR_X_1204_Y_1296_Z_224.raw"
 int gridSize = 1204;
@@ -138,12 +151,15 @@ int ZgridSize = 224;
 
 #define CHAR
 
-int startexploreval=1;//50
+int startexploreval=50;//50
 int endexploreval=255;//*/
 
 //Oh un magnifique poisson
 //10000 - 30000
-/*
+//Nombre de boucle a faire 93
+//ren->GetActiveCamera()->Roll(0);
+//ren->GetActiveCamera()->Elevation(-90);
+//ren->GetActiveCamera()->Azimuth(0) ;
 #define FICHIER MY_MESHES_PATH "/Mystere11_SHORT_X_512_Y_512_Z_1024.raw"
 int gridSize = 512;
 int YgridSize = 512;
@@ -151,7 +167,7 @@ int ZgridSize = 1024;
 
 #define SHORT
 
-int startexploreval=10000;//20000
+int startexploreval=20000;//20000
 int endexploreval=65000; //26500//*/
 
 const char *location = FICHIER ;
@@ -254,9 +270,10 @@ int main(int argc, char *argv[])
 
         ren->AddActor(actor);
         ren->SetViewport(0, 0, 1, 1);
+
+    ren->GetActiveCamera()->Roll(0);
     ren->GetActiveCamera()->Elevation(-90);
         ren->GetActiveCamera()->Azimuth(0) ;
-        ren->GetActiveCamera()->Roll(90);
         //vtkCamera *cam = ren->GetActiveCamera();
         //         cam->SetFocalPoint(0.5, 0.5, 0.5);
         //                        cam->SetPosition(-2., .0, 3.);
@@ -277,7 +294,7 @@ int main(int argc, char *argv[])
             auxrgba[i * 4 + 3] = 1;
         }
 
-        for (passNum = 0; passNum < 22; passNum++) {//11
+        for (passNum = 0; passNum < 93; passNum++) {
 
             int step = (gridSize / NbPasses);
 
