@@ -2,8 +2,8 @@
 #include "config.h"
 #include <mpi.h>
 #include "helpers.h"
-//#define BIG
-#define SMALL
+#define BIG
+//#define SMALL
 
 
 int NbPasses = 45;//45
@@ -64,7 +64,7 @@ int endexploreval=255;//*/
 //entre 20000 30000
 //Nombre de boucle a faire 12
 // Elevation 180
-/*
+
 #define FICHIER MY_MESHES_PATH "/Mystere1_SHORT_X_512_Y_512_Z_134.raw"
 int gridSize = 512;
 int YgridSize = 512;
@@ -90,7 +90,7 @@ int ZgridSize = 322;
  int endexploreval=65000;// 65000 //*/
 
 //je sais pas ce que c'est mais on a les images
-//Nombre de boucle a faire 11
+//Nombre de boucle a faire 30
 //ren->GetActiveCamera()->Roll(0);
 //ren->GetActiveCamera()->Elevation(0);
 //ren->GetActiveCamera()->Azimuth(-135) ;
@@ -160,6 +160,7 @@ int endexploreval=255;//*/
 //ren->GetActiveCamera()->Roll(0);
 //ren->GetActiveCamera()->Elevation(-90);
 //ren->GetActiveCamera()->Azimuth(0) ;
+/*
 #define FICHIER MY_MESHES_PATH "/Mystere11_SHORT_X_512_Y_512_Z_1024.raw"
 int gridSize = 512;
 int YgridSize = 512;
@@ -232,7 +233,7 @@ int main(int argc, char *argv[])
         int zEnd = ZgridSize;
 
 
-        reader = ReadGrid(zStart, zEnd);
+        //reader = ReadGrid(zStart, zEnd);
 
         vtkContourFilter *cf = vtkContourFilter::New();
         cf->SetNumberOfContours(1);
@@ -240,7 +241,7 @@ int main(int argc, char *argv[])
         int valcont = startexploreval;
         cf->SetValue(0, valcont);
 
-        cf->SetInputData(reader);
+        //cf->SetInputData(reader);
 
         int maxsize = std::max(gridSize, std::max(YgridSize, ZgridSize));
         vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
@@ -271,9 +272,11 @@ int main(int argc, char *argv[])
         ren->AddActor(actor);
         ren->SetViewport(0, 0, 1, 1);
 
-    ren->GetActiveCamera()->Roll(0);
-    ren->GetActiveCamera()->Elevation(-90);
-        ren->GetActiveCamera()->Azimuth(0) ;
+        ren->GetActiveCamera()->Roll(0);
+        ren->GetActiveCamera()->Elevation(0);
+        ren->GetActiveCamera()->Azimuth(-90) ;
+
+
         //vtkCamera *cam = ren->GetActiveCamera();
         //         cam->SetFocalPoint(0.5, 0.5, 0.5);
         //                        cam->SetPosition(-2., .0, 3.);
@@ -294,7 +297,7 @@ int main(int argc, char *argv[])
             auxrgba[i * 4 + 3] = 1;
         }
 
-        for (passNum = 0; passNum < 93; passNum++) {
+        for (passNum = 0; passNum < 46; passNum++) {
 
             int step = (gridSize / NbPasses);
 
